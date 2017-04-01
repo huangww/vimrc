@@ -1,0 +1,82 @@
+
+# ======================================================
+# overwrite some c snippets
+snippet inc "#include local header (inc)"
+#include "${1:`!p snip.rv = snip.basename + '.hpp'`}"
+endsnippet
+
+snippet Inc "#include <> (Inc)"
+#include <${1}>
+endsnippet
+
+snippet main "main() (main)"
+int main(int argc, char *argv[])
+{
+    int startTime = time(NULL);
+
+    ${VISUAL}${0}
+
+    int endTime = time(NULL);
+    int elapsedTime = endTime - startTime;
+    std::cout << "Runing time: " << elapsedTime 
+    << "seconds" << std::endl;
+    return 0;
+}
+endsnippet
+# ======================================================
+
+snippet incran "#includes for random number" 
+#include <cfloat> // DBL_MAX
+#include <cmath> // std::nextafter
+#include <random>
+endsnippet
+
+snippet ran "uniform random number in [0,1)" 
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_real_distribution<double> dist(${1:0},${2:1});
+double ${3:ran} = dist(gen);
+endsnippet
+
+snippet ran1 "uniform random number in [0,1]" 
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_real_distribution<double> dist(${1:0}, std::nextafter(${2:1}, DBL_MAX));
+double ${3:ran1} = dist(gen);
+endsnippet
+
+snippet cl "class .. (class)"
+class ${1:`!p snip.rv = snip.basename[0].capitalize() + snip.basename[1:] or "name"`}${2:: ${3:public} ${4:BaseClass}}
+{
+public:
+	${1/(\w+).*/$1/} (${5});
+	virtual ~${1/(\w+).*/$1/} ();
+protected:
+	${6:/* data */}
+private:
+	${0:/* data */}
+};
+endsnippet
+
+
+snippet cons "constructor"
+${1:`!p snip.rv = snip.basename[0].capitalize() + snip.basename[1:] or "name"`}::${1/(\w+).*/$1/}(${2}) ${3:: ${4:BaseClass}(${5})}
+{
+    ${0}
+}
+endsnippet
+
+snippet des "destructor"
+${1:`!p snip.rv = snip.basename[0].capitalize() + snip.basename[1:] or "name"`}::~${1/(\w+).*/$1/}() 
+{
+    ${0}
+}
+endsnippet
+
+snippet mfun "member function"
+${4:void} ${1:`!p snip.rv = snip.basename[0].capitalize() + snip.basename[1:] or "name"`}::${2:memberFunction}(${3}) 
+{
+    ${0}
+}
+endsnippet
+
